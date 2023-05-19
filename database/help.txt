@@ -1,0 +1,2 @@
+mongod --dbpath=data --bind_ip 127.0.0.1
+//run this command to start the db server
