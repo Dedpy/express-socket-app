@@ -10,7 +10,7 @@ const messageRoutes = require("./routes/messages.js");
 app.use(express.json());
 app.set("view engine", "twig");
 app.set("views", path.join(__dirname, "views"));
-
+app.use(express.static("public"));
 app.use("/message", messageRoutes);
 
 const server = http.createServer(app);
