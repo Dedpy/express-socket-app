@@ -1,9 +1,20 @@
-var express = require("express");
-var router = express.Router();
+const express = require("express");
+const router = express.Router();
 
-/* GET home page. */
-router.get("/", function (req, res, next) {
-  res.render("ajoutMessage", { title: "Messages" });
-});
+const {
+  createMesssage,
+  updateMesssage,
+  deleteMesssage,
+  getMesssage,
+  getMesssages,
+  likeMessage,
+} = require("../controllers/message.controller");
+
+router.get("/", getMesssages);
+router.get("/:id", getMesssage);
+router.post("/", createMesssage);
+router.put("/:id", updateMesssage);
+router.put("/like/:id", likeMessage);
+router.delete("/:id", deleteMesssage);
 
 module.exports = router;

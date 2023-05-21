@@ -51,7 +51,7 @@ const likeMessage = async (req, res) => {
   const message = await Message.findByIdAndUpdate(id, {
     pseudo: m.pseudo,
     content: m.content,
-    likes: m.likes++,
+    likes: m.likes,
   });
 
   return res.status(200).json({ message: { ...m._doc } });

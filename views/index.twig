@@ -2,11 +2,82 @@
 
 {% block body %}
   
-  
+  <script  async >
+   const socket = io.connect();
+
+// User joined event
+socket.on('user-joined', (data) => {
+  const h1 = document.createElement('h1');
+  h1.textContent = 'A new user has joined';
+  document.body.appendChild(h1);
+});
+
+socket.on('disconnect', (data) => {
+  io.emit('disconnect');
+});
+
+// Message event
+socket.on('msg', (data) => {
+  const li = document.createElement('li');
+  console.log(`msg on events ${data}`);
+  li.textContent = `${data.pseudo}: ${data.content}: ${data.likes}`;
+  document.querySelector('.list-chat').appendChild(li);
+});
+
+
+// Disconnect event
+socket.on('user-disconnected', (data) => {
+  alert('A user has disconnected');
+});
+
+// User typing event
+function userTyping() {
+  socket.emit('user-typing', 'User typing');
+}
+
+let isTyping = false;
+
+socket.on('userTyping', (data) => {
+  if (!isTyping) {
+    isTyping = true;
+    const typingStatus = document.getElementById('typing-status');
+    typingStatus.textContent = data;
+    typingStatus.style.display = 'block';
+    setTimeout(() => {
+      typingStatus.style.display = 'none';
+      isTyping = false;
+    }, 5000);
+  }
+});
+
+function send(){
+  event.preventDefault();
+  const pseudo = document.getElementById('pseudo').value;
+  const content = document.getElementById('content').value;
+  socket.emit('msg', {pseudo: pseudo, content: content, likes:0});
+}
+
+</script>
+
+
   <div class="container">
     <div class="row">
       <div class="col-md-12">
-        <h1>Welcome</h1>
+      
+        <form  id="myForm" >
+          <label for="pseudo">Pseudo</label>
+          <input type="text" name="pseudo" id="pseudo" class="form-control" placeholder="Pseudo"> 
+
+          <label for="content">Content</label>
+          <input type="text" name="content" id="content" class="form-control" placeholder="Content" onkeyup="userTyping()">
+
+          <button type="submit" onclick="send()" class="btn btn-primary">Envoyer</button>
+        </form>
+    <p id="typing-status" style="display: none;"></p>
+        <ul class="list-chat">
+          
+        </ul>
+
       </div>
     </div>
   </div>

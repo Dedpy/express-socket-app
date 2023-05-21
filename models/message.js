@@ -1,22 +1,10 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
-const MessageSchema = new Schema({
-  pseudo: {
-    required: true,
-    type: String,
-    unique: true,
-  },
-  content: {
-    required: true,
-    type: String,
-  },
-  likes: {
-    type: Number,
-    default: 0,
-  },
+const Message = new Schema({
+  pseudo: String,
+  content: String,
+  likes: Number,
 });
 
-const Message = mongoose.model("Message", MessageSchema);
-
-module.exports = Message;
+module.exports = mongoose.model("Message", Message);
