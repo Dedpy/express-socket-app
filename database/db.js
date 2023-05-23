@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const connectDB = () => {
-  const MONGO_URL = "mongodb://localhost:27017/examWassimBenRomdhane";
+  const MONGO_URL = "mongodb://localhost:27017/myexam2023";
   mongoose
     .connect(MONGO_URL, {
       useNewUrlParser: true,
